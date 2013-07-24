@@ -10,11 +10,14 @@ package
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.GradientType;
+	import flash.display.JPEGEncoderOptions;
+	import flash.display.PNGEncoderOptions;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Matrix;
+	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
 	import jp.ferv.fileformats.png.PNG;
 	import jp.mztm.umhr.logging.Log;
@@ -91,6 +94,11 @@ package
 			
 			Log.trace("W:465 x H:465の画像を JPEG Quality 90 にエンコードする時間(msec)");
 			
+			Log.timeStart();
+			_zipper.add(_bitmapData.encode(new Rectangle(0, 0, _bitmapData.width, _bitmapData.height), new flash.display.JPEGEncoderOptions(90)), "JPEGEncoderOptions.jpg");
+			Log.traceTime("flash.display.JPEGEncoderOptions");
+			Log.timeReset();
+			
 			// mikechambers/as3corelib · GitHub
 			// https://github.com/mikechambers/as3corelib
 			Log.timeStart();
@@ -117,6 +125,11 @@ package
 		private function PNGEncode():void 
 		{
 			Log.trace("W:465 x H:465の画像を PNG にエンコードする時間(msec)");
+			
+			Log.timeStart();
+			_zipper.add(_bitmapData.encode(new Rectangle(0, 0, _bitmapData.width, _bitmapData.height), new flash.display.PNGEncoderOptions()), "PNGEncoderOptions.png");
+			Log.traceTime("flash.display.PNGEncoderOptions");
+			Log.timeReset();
 			
 			// mikechambers/as3corelib · GitHub
 			// https://github.com/mikechambers/as3corelib
