@@ -23,6 +23,7 @@ package
 	import jp.mztm.umhr.logging.Log;
 	import org.bytearray.JPEGEncoder;
 	import ru.inspirit.encoders.png.PNGEncoder;
+	import nid.image.encoder.JPEGEncoder;
 	/**
 	 * ...
 	 * @author umhr
@@ -95,8 +96,8 @@ package
 			Log.trace("W:465 x H:465の画像を JPEG Quality 90 にエンコードする時間(msec)");
 			
 			Log.timeStart();
-			_zipper.add(_bitmapData.encode(new Rectangle(0, 0, _bitmapData.width, _bitmapData.height), new flash.display.JPEGEncoderOptions(90)), "JPEGEncoderOptions.jpg");
-			Log.traceTime("flash.display.JPEGEncoderOptions");
+			_zipper.add(_bitmapData.encode(new Rectangle(0, 0, _bitmapData.width, _bitmapData.height), new flash.display.JPEGEncoderOptions(90)), "BitmapData_encode.jpg");
+			Log.traceTime("flash.display.BitmapData.encode");
 			Log.timeReset();
 			
 			// mikechambers/as3corelib · GitHub
@@ -120,6 +121,14 @@ package
 			Log.traceTime("org.bytearray.JPEGEncoder");
 			Log.timeReset();
 			
+			// AS3 PNG and JPEG(JPG) Encoder with Pixel density (DPI)
+			// http://www.infogroupindia.com/blog/posts/693/as3-png-encoder-with-pixel-density-dpi
+			// https://github.com/nidin/as3-image-library
+			Log.timeStart();
+			_zipper.add(new nid.image.encoder.JPEGEncoder(quality).encode(_bitmapData), "nid.jpg");
+			Log.traceTime("nid.image.encoder.JPEGEncoder");
+			Log.timeReset();
+			
 		}
 		
 		private function PNGEncode():void 
@@ -127,8 +136,8 @@ package
 			Log.trace("W:465 x H:465の画像を PNG にエンコードする時間(msec)");
 			
 			Log.timeStart();
-			_zipper.add(_bitmapData.encode(new Rectangle(0, 0, _bitmapData.width, _bitmapData.height), new flash.display.PNGEncoderOptions()), "PNGEncoderOptions.png");
-			Log.traceTime("flash.display.PNGEncoderOptions");
+			_zipper.add(_bitmapData.encode(new Rectangle(0, 0, _bitmapData.width, _bitmapData.height), new flash.display.PNGEncoderOptions()), "BitmapData_encode.png");
+			Log.traceTime("flash.display.BitmapData.encode");
 			Log.timeReset();
 			
 			// mikechambers/as3corelib · GitHub
@@ -150,6 +159,14 @@ package
 			Log.timeStart();
 			_zipper.add(ru.inspirit.encoders.png.PNGEncoder.encode(_bitmapData), "inspirit.png");
 			Log.traceTime("ru.inspirit.encoders.png.PNGEncoder");
+			Log.timeReset();
+			
+			// AS3 PNG and JPEG(JPG) Encoder with Pixel density (DPI)
+			// http://www.infogroupindia.com/blog/posts/693/as3-png-encoder-with-pixel-density-dpi
+			// https://github.com/nidin/as3-image-library
+			Log.timeStart();
+			_zipper.add(nid.image.encoder.PNGEncoder.encode(_bitmapData), "nid.png");
+			Log.traceTime("nid.image.encoder.PNGEncoder");
 			Log.timeReset();
 			
 			// dsk/PNG - Spark project
